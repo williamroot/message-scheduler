@@ -6,7 +6,7 @@ from django.contrib import admin
 class CommunicationSchedulingAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'message', 'message_type', 'recipient',
-        'scheduling', 'created_at'
+        'scheduling', 'status', 'created_at'
     )
     search_fields = ('message', 'recipient')
-    list_filter = ('message_type',)
+    list_filter = ('message_type', 'status',)

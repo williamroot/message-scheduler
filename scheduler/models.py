@@ -9,13 +9,26 @@ class CommunicationScheduling(models.Model):
     """
     MESSAGE_TYPES = Choices(
         ('sms', 'Mensagem SMS'),
-        ('whatsapp', 'Mensagem Whatsapp'),
+        ('sending', 'Mensagem Whatsapp'),
         ('push', 'Notificação Push'),
         ('email', 'E-mail')
+    )
+    STATUS = Choices(
+        ('waiting', 'Aguardando'),
+        ('running', 'Executando envio'),
+        ('done', 'Envio realizado'),
+        ('error', 'Erro')
     )
     created_at = models.DateTimeField(
         'Data/hora de criação do agendamento',
         auto_now_add=True
+    )
+    status = models.CharField(
+        'Status do agendamento',
+        choices=STATUS,
+        max_length=7,
+        null=False,
+        default=STATUS.waiting
     )
     message_type = models.CharField(
         'Tipo de mensagem',
