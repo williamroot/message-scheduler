@@ -165,6 +165,34 @@ class SchedulingGetStatusTestCase(BaseTest):
         self.assertEqual(response.status_code, 404)
 
 
+class SchedulingDeleteTestCase(BaseTest):
+    def test_delete_scheduling_status_ok(self):
+        """
+        Garante que seja possível deletar um agendamento existente
+        """
+        instance = mommy.make(CommunicationScheduling)
+        response = self.client.delete(
+            f'/scheduling/{instance.id}/',
+        )
+        # validando o status code retornado
+        self.assertEqual(response.status_code, 204)
+        # garantindo a deleção
+        with self.assertRaises(CommunicationScheduling.DoesNotExist):
+            CommunicationScheduling.objects.get(id=instance.id)
+
+    def test_delete_scheduling_status_404(self):
+        """
+        Garante que ao passar o id de um agendamento inexistente
+        serja retornado o status HTTP 404
+        """
+        instance = mommy.make(CommunicationScheduling)
+        response = self.client.delete(
+            f'/scheduling/invalid-id/',
+        )
+        # validando o status code retornado
+        self.assertEqual(response.status_code, 404)
+
+
 class AuthenticationTestCase(BaseTest):
 
     def setUp(self):
