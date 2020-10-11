@@ -139,6 +139,32 @@ class SchedulingCreationTestCase(BaseTest):
         )
 
 
+class SchedulingGetStatusTestCase(BaseTest):
+    def test_get_scheduling_status_ok(self):
+        """
+        Garante que ao passar o id de um agendamento existente seja possível
+        consultar seu status
+        """
+        instance = mommy.make(CommunicationScheduling)
+        response = self.client.get(
+            f'/scheduling/{instance.id}/',
+        )
+        # validando o status code retornado
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['status'], instance.status)
+
+    def test_get_scheduling_status_404(self):
+        """
+        Garante que ao passar o id de um agendamento não existente
+        seja retoranado o status HTTP 404
+        """
+        response = self.client.get(
+            '/scheduling/invalid-id/',
+        )
+        # validando o status code retornado
+        self.assertEqual(response.status_code, 404)
+
+
 class AuthenticationTestCase(BaseTest):
 
     def setUp(self):
