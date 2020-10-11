@@ -20,3 +20,6 @@ createsuperuser:
 
 shell:
 	docker-compose run --rm api python manage.py shell_plus --print-sql
+
+test:
+	docker-compose run --rm api python manage.py test

@@ -25,6 +25,7 @@ class CommunicationScheduling(models.Model):
     )
     status = models.CharField(
         'Status do agendamento',
+        blank=True,
         choices=STATUS,
         max_length=7,
         null=False,
@@ -52,3 +53,7 @@ class CommunicationScheduling(models.Model):
         null=False,
         blank=False
     )
+
+    class Meta:
+        verbose_name = 'Agendamento'
+        verbose_name_plural = 'Agendamentos'
