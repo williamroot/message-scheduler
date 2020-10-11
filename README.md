@@ -15,7 +15,7 @@ Dependências:
 - [Docker 19.03.8 +](https://docs.docker.com/get-docker/)
 - [Docker Compose 1.23.2 +](https://docs.docker.com/compose/install/)
 
-Instalar as dependências
+Build
 
 ```sh
 $ cd message-scheduler
@@ -28,7 +28,7 @@ Rodar as migrações
 $ make migrate
 ```
 
-Rodar os tests
+Rodar os testes
 
 ```sh
 $ make test
@@ -44,6 +44,9 @@ Iniciar o projeto
 $ make runserver
 ```
 Por padrão o serviço vai rodar na porta 8000, portanto estará acessível pelo endereço:
+
 http://localhost:8000/
 
+
 O Message Scheduler usa o Django REST Framework que provêm uma [documentação interativa para a API](https://www.django-rest-framework.org/topics/documenting-your-api/#self-describing-apis)
+
