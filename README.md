@@ -7,7 +7,7 @@ Uma API REST para agendamento de comunicações.
 * [Python](https://www.python.org/)
 * [Django](https://www.djangoproject.com/)
 * [Django REST Framework](https://www.django-rest-framework.org/)
-* [Postgresql](https://www.postgresql.org/)
+* [PostgreSQL](https://www.postgresql.org/)
 
 ### Instalação
 
