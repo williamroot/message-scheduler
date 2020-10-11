@@ -8,3 +8,4 @@ ipdb==0.13.4
 ipython==7.18.1
 pdbpp==0.10.2
 django-model-utils==4.0.0
+model-mommy==2.0.0

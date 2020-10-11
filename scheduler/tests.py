@@ -1,4 +1,5 @@
 from rest_framework.test import APIClient
+from model_mommy import mommy
 from django.test import TestCase
 from .models import CommunicationScheduling
 from django.contrib.auth.models import User
@@ -14,11 +15,11 @@ class BaseTest(TestCase):
         }
 
     def setUp(self):
-
         user = User.objects.create(username='test-user')
         password = 'test-user-password'
         user.set_password(password)
         user.save()
+        self.client = APIClient()
         self.client = APIClient()
         self.client.login(username=user.username, password=password)
 
@@ -136,3 +137,48 @@ class SchedulingCreationTestCase(BaseTest):
         self.assertEqual(
             response.json()['status'], CommunicationScheduling.STATUS.waiting
         )
+
+
+class AuthenticationTestCase(BaseTest):
+
+    def setUp(self):
+        super().setUp()
+        self.client.logout()
+
+    def test_login_required_creation(self):
+        """
+        Garante que para conseguir acessar os dados da API o cliente precisa
+        estar autenticado
+        """
+        response = self.client.post(
+            '/scheduling/',
+            self.get_payload(),
+            format='json'
+        )
+        # validando o status code retornado
+        self.assertEqual(response.status_code, 403)
+
+    def test_login_required_list(self):
+        """
+        Garante que para conseguir acessar os dados da API o cliente precisa
+        estar autenticado
+        """
+        response = self.client.get(
+            '/scheduling/'
+        )
+        # validando o status code retornado
+        self.assertEqual(response.status_code, 403)
+
+    def login_required_detail(self):
+        instance = mommy.make(CommunicationScheduling)
+        response = self.client.get(
+            f'/scheduling/{instance.id}'
+        )
+        self.assertEqual(response.status_code, 403)
+
+    def login_required_detail(self):
+        instance = mommy.make(CommunicationScheduling)
+        response = self.client.delete(
+            f'/scheduling/{instance.id}'
+        )
+        self.assertEqual(response.status_code, 403)
