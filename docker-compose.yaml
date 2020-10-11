@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /dev/log:/dev/log
+    depends_on:
+      - postgres
+    environment:
+      DB_NAME: message-scheduler
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: postgres
+    command:
+      python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env.dev
+  postgres:
+    image: postgres:12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: message-scheduler
+      POSTGRES_PASSWORD: postgres
+volumes:
+  postgres_data:
